@@ -38,10 +38,10 @@ This is a simple type-safe wrapper of the
 ## Disclaimer
 
 The wrapper is not nanosecond performance focused, but it is focused on
-usability. This means some dynamic allocations are performed as part of the
+usability. This means some dynamic memory allocations are performed as part of the
 formatting of the trace names and texts, which may not be suitable for
 sub-microsecond real time applications. That said, the library tries to reduce
-these allocation to the minimum needed to perform the required string
+these allocations to the minimum needed to perform the required string
 formatting. If you thing this can be improved while keeping the existing
 functionality, please take a look at `tracemacros.h` and open an issue with any
 suggestion or idea.
