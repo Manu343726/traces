@@ -21,12 +21,15 @@ def get_tag_version(git):
     if tag is None:
         return None
 
-    result = re.fullmatch(r'v([0-9]+)\.([0-9]+)\.([0-9]+)', tag)
+    result = re.fullmatch(r'v([0-9]+)\.([0-9]+)\.([0-9]+)(?:\-([0-9]+))', tag)
 
     if result is None:
         raise ConanException('Invalid git tag "{}"'.format(tag))
 
-    return result.expand(r'\1.\2.\3')
+    if len(result.groups()) > 3:
+        return result.expand(r'\1.\2.\3-\4')
+    else:
+        return result.expand(r'\1.\2.\3')
 
 class Traces(common.CMakePackage):
     name = 'traces'
