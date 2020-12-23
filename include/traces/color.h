@@ -14,7 +14,7 @@ struct Color
 {
     std::uint8_t r, g, b;
 
-    operator std::uint32_t() const
+    constexpr operator std::uint32_t() const
     {
         return (r << 16) | (g << 8) | b;
     }
