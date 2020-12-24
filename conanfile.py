@@ -55,6 +55,7 @@ class Traces(common.CMakePackage):
         'tracy_client:TRACY_ENABLE': True,
         'tracy_client:TRACY_ON_DEMAND': True,
         'tracy_client:TRACY_NO_EXIT': False,
+        'tracy_client:TRACY_USE_CONSTEXPR_VARIABLES': False,
         'TRACES_DISABLE_STACK_TRACES': False,
         'TRACES_DISABLE_MEMORY_ALLOCATION_TRACES': False,
         'TRACES_DISABLE_MUTEX_TRACES': False
