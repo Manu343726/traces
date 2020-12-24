@@ -137,7 +137,7 @@
             TRACES_PP_CAT(__traces_trace_zone_name_, __LINE__).c_str(),    \
             std::min(                                                      \
                 TRACES_PP_CAT(__traces_trace_zone_name_, __LINE__).size(), \
-                TRACES_TEXT_MAX_LENGTH))
+                static_cast<std::size_t>(TRACES_TEXT_MAX_LENGTH)))
 
 #define TRACES_EVENT_COLORED(color, ...)                           \
     [](const auto& colorParam, const std::string& message) {       \
