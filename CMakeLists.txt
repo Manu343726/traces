@@ -46,7 +46,7 @@ set(TRACES_SOURCES
     ${TRACES_SOURCE_DIR}/eventtracer.cpp
 )
 
-add_library(traces SHARED
+add_library(traces
     ${TRACES_HEADERS}
     ${TRACES_SOURCES}
 )
@@ -101,8 +101,27 @@ check_cxx_source_compiles("
 "
     TRACES_HAS_CONSTEXPR_PRETTY_FUNCTION)
 
+check_cxx_source_compiles("
+    #include <string_view>
+
+    int main()
+    {
+        constexpr std::string_view hello;
+        constexpr auto found = hello.find_first_of('h');
+    }
+"
+TRACES_HAS_CONSTEXPR_STRING_VIEW)
+
 if(TRACES_HAS_CONSTEXPR_PRETTY_FUNCTION)
     target_compile_definitions(traces PUBLIC TRACES_HAS_CONSTEXPR_PRETTY_FUNCTION)
 endif()
 
-install(TARGETS traces LIBRARY DESTINATION lib)
+if(TRACES_HAS_CONSTEXPR_STRING_VIEW)
+    target_compile_definitions(traces PUBLIC TRACES_HAS_CONSTEXPR_STRING_VIEW)
+endif()
+
+if(BUILD_SHARED_LIBS)
+    install(TARGETS traces LIBRARY DESTINATION lib)
+else()
+    install(TARGETS traces ARCHIVE DESTINATION lib)
+endif()

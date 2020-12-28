@@ -6,6 +6,7 @@
 
 #include "functionname.h"
 #include "modules.h"
+#include "config.h"
 
 namespace traces
 {
@@ -118,7 +119,7 @@ constexpr auto all()
 
 } // namespace colors
 
-constexpr Color moduleColor(std::string_view name)
+TRACES_CONSTEXPR_FUNCTION Color moduleColor(std::string_view name)
 {
     constexpr auto palette = ::traces::colors::material::all();
 
@@ -134,13 +135,13 @@ constexpr Color moduleColor(std::string_view name)
     }
 }
 
-constexpr Color
+TRACES_CONSTEXPR_FUNCTION Color
     functionColor(const ::traces::detail::FunctionName& functionName)
 {
     return moduleColor(functionName.fullName());
 }
 
-constexpr Color messageColor(std::string_view module)
+TRACES_CONSTEXPR_FUNCTION Color messageColor(std::string_view module)
 {
     const Color color = moduleColor(module);
 

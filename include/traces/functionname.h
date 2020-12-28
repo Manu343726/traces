@@ -2,6 +2,7 @@
 #define TRACES_FUNCTIONAME_H_INCLUDED
 
 #include <string_view>
+#include "config.h"
 
 namespace traces
 {
@@ -11,12 +12,12 @@ namespace detail
 
 struct FunctionName
 {
-    constexpr FunctionName(std::string_view prettyFunctionString);
+    TRACES_CONSTEXPR_FUNCTION FunctionName(std::string_view prettyFunctionString);
 
-    constexpr std::string_view displayName() const;
-    constexpr std::string_view name() const;
-    constexpr std::string_view fullDisplayName() const;
-    constexpr std::string_view fullName() const;
+    TRACES_CONSTEXPR_FUNCTION std::string_view displayName() const;
+    TRACES_CONSTEXPR_FUNCTION std::string_view name() const;
+    TRACES_CONSTEXPR_FUNCTION std::string_view fullDisplayName() const;
+    TRACES_CONSTEXPR_FUNCTION std::string_view fullName() const;
 
 private:
     struct ParsedName
@@ -28,17 +29,17 @@ private:
 
     ParsedName _parsedName;
 
-    static constexpr ParsedName parse(std::string_view prettyFunctionString);
-    static constexpr std::string_view withoutQualifier(std::string_view name);
+    static TRACES_CONSTEXPR_FUNCTION ParsedName parse(std::string_view prettyFunctionString);
+    static TRACES_CONSTEXPR_FUNCTION std::string_view withoutQualifier(std::string_view name);
 };
 
 
-constexpr FunctionName::FunctionName(std::string_view prettyFunctionString) :
+TRACES_CONSTEXPR_FUNCTION FunctionName::FunctionName(std::string_view prettyFunctionString) :
     _parsedName{parse(prettyFunctionString)}
 {
 }
 
-constexpr FunctionName::ParsedName FunctionName::parse(std::string_view prettyFunctionString)
+TRACES_CONSTEXPR_FUNCTION FunctionName::ParsedName FunctionName::parse(std::string_view prettyFunctionString)
 {
     ParsedName result;
 
@@ -54,7 +55,7 @@ constexpr FunctionName::ParsedName FunctionName::parse(std::string_view prettyFu
     return result;
 }
 
-constexpr std::string_view FunctionName::withoutQualifier(std::string_view name)
+TRACES_CONSTEXPR_FUNCTION std::string_view FunctionName::withoutQualifier(std::string_view name)
 {
     const auto lastQualifierIndex = name.find_last_of("::");
 
@@ -68,22 +69,22 @@ constexpr std::string_view FunctionName::withoutQualifier(std::string_view name)
     }
 }
 
-constexpr std::string_view FunctionName::fullName() const
+TRACES_CONSTEXPR_FUNCTION std::string_view FunctionName::fullName() const
 {
     return _parsedName.wihtoutResultTypeAndArgs;
 }
 
-constexpr std::string_view FunctionName::fullDisplayName() const
+TRACES_CONSTEXPR_FUNCTION std::string_view FunctionName::fullDisplayName() const
 {
     return _parsedName.withoutResultType;
 }
 
-constexpr std::string_view FunctionName::displayName() const
+TRACES_CONSTEXPR_FUNCTION std::string_view FunctionName::displayName() const
 {
     return withoutQualifier(fullDisplayName());
 }
 
-constexpr std::string_view FunctionName::name() const
+TRACES_CONSTEXPR_FUNCTION std::string_view FunctionName::name() const
 {
     return withoutQualifier(fullName());
 }

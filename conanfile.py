@@ -47,11 +47,13 @@ class Traces(common.CMakePackage):
                 'fmt/6.2.0')
     settings = 'os', 'compiler', 'build_type', 'arch'
     options = {
+        'shared': [True, False],
         'TRACES_DISABLE_STACK_TRACES': [True, False],
         'TRACES_DISABLE_MEMORY_ALLOCATION_TRACES': [True, False],
         'TRACES_DISABLE_MUTEX_TRACES': [True, False],
     }
     default_options = {
+        'shared': False,
         'tracy_client:TRACY_ENABLE': True,
         'tracy_client:TRACY_ON_DEMAND': True,
         'tracy_client:TRACY_NO_EXIT': False,

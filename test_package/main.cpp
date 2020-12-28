@@ -3,10 +3,12 @@
 #define TRACES_MODULES "'main' 'module1' 'module1::submodule1'"
 #include <traces/traces.h>
 
-static_assert(traces::modules.size() == 3);
-static_assert(traces::modules[0] == "main");
-static_assert(traces::modules[1] == "module1");
-static_assert(traces::modules[2] == "module1::submodule1");
+#ifdef TRACES_HAS_CONSTEXPR_STRING_VIEW
+static_assert(traces::modules().size() == 3);
+static_assert(traces::modules()[0] == "main");
+static_assert(traces::modules()[1] == "module1");
+static_assert(traces::modules()[2] == "module1::submodule1");
+#endif
 
 namespace module1
 {
@@ -49,7 +51,7 @@ int main()
 {
     TRACES_FUNCTION_NAMED("main")("main function");
 
-    for(const auto& module : traces::modules)
+    for(const auto& module : traces::modules())
     {
         fmt::print("Found module \"{}\"\n", module);
     }
