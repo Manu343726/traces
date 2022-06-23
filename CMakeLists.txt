@@ -11,6 +11,7 @@ option(TRACES_DISABLE_BROADCAST "Disable broadcasting of client in local network
 option(TRACES_DISABLE_STACK_TRACES "Disable stack traces" OFF)
 option(TRACES_DISABLE_MEMORY_ALLOCATION_TRACES "Disable tracing of memory allocations" OFF)
 option(TRACES_DISABLE_MUTEX_TRACES "Disable tracing of mutexes" OFF)
+option(TRACES_FMT_HEADER_ONLY "Use header-only version of fmt library" OFF)
 
 if(NOT TRACES_PORT)
     set(TRACES_PORT 8086)
@@ -57,7 +58,13 @@ target_include_directories(traces PUBLIC ${TRACES_INCLUDE_DIR})
 find_package(tracy_client REQUIRED)
 find_package(fmt REQUIRED)
 
-target_link_libraries(traces PUBLIC fmt::fmt tracy_client::tracy_client)
+target_link_libraries(traces PUBLIC tracy_client::tracy_client)
+
+if(TRACES_FMT_HEADER_ONLY)
+    target_link_libraries(traces PUBLIC fmt::fmt-header-only)
+else()
+    target_link_libraries(traces PUBLIC fmt::fmt)
+endif()
 
 if(TRACES_DISABLE_MEMORY_ALLOCATION_TRACES)
     message(STATUS "traces memory allocation traces disabled")
